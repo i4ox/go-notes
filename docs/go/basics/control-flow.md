@@ -100,6 +100,102 @@ OuterLoop:
     }
 ```
 
+## Range
+
+!!! info
+
+    `range` - это встроенная конструкция языка Go, предназначенная для итерации (перебора) элементов различных коллекций:
+
+    - массивов (arrays) и срезов (slices)
+    - карт (maps)
+    - строк (strings)
+    - каналов (channels)
+
+### По массиву/срезу
+
+```go
+nums := []int{2, 3, 4}
+for i, num := range nums {
+    fmt.Println(i, num)
+}
+```
+
+### По map
+
+```go
+m := map[string]string{"a": "apple", "b": "banana"}
+for k, v := range m {
+    fmt.Println(k, v)
+}
+```
+
+### По строке(итерация по рунам)
+
+```go
+for i, c := range "go" {
+    fmt.Println(i, c)
+}
+```
+
+### По каналу
+
+```go
+ch := make(chan int, 2)
+ch <- 1
+ch <- 2
+close(ch)
+for v := range ch {
+    fmt.Println(v)
+}
+```
+
+### Важные особенности `range`
+
+#### Индексы и значения
+
+```go
+arr := [3]int{10, 20, 30}
+for i, v := range arr {
+    // i - индекс, v - копия значения
+    v *= 2 // Не изменяет оригинальный массив
+}
+```
+
+Если надо изменить значение, можно использовать прием ниже.
+
+```go
+type Item struct{ value int }
+items := []Item{{1}, {2}, {3}}
+
+// Не работает - v это копия
+for _, v := range items {
+    v.value *= 2
+}
+
+// Рабочий вариант
+for i := range items {
+    items[i].value *= 2
+}
+```
+
+#### Пропуск компонентов
+
+```go
+for i := range nums {}    // Только индексы
+for _, v := range nums {} // Только значения
+```
+
+#### Изменения в Go 1.21 (аналогично for)
+
+```go
+var funcs []func()
+for _, v := range []int{1, 2, 3} {
+    funcs = append(funcs, func() {
+        fmt.Println(v) // Теперь выводит 1, 2, 3 (до 1.21 выводило 3, 3, 3)
+    })
+}
+```
+
 ## If
 
 ### Базовый синтаксис
@@ -158,7 +254,12 @@ default:
 
 ### Switch с fallthrough
 
+!!! info
+
+    `fallthrough` позволяет перейти к выполнению следующего блока без проверки условия.
+
 ```go
+// Вывод: 2 3
 switch 2 {
 case 1:
     fmt.Println("1")
@@ -168,6 +269,38 @@ case 2:
     fallthrough
 case 3:
     fmt.Println("3")
+}
+```
+
+#### Особенности при работе с `fallthrough`
+
+1. Можно использовать только в `switch`.
+2. Должен быть последним оператором в `case`.
+3. Нельзя использовать в последнем `case` блока.
+4. Не проверяет условие следующего `case`.
+
+#### Альтернатива для `fallthrough`
+
+```go
+// Вместо fallthrough можно перечислять несколько значений
+switch x {
+case 1, 2, 3: // Эквивалент case 1: fallthrough; case 2: fallthrough; case 3:
+    fmt.Println("x is 1, 2 or 3")
+}
+```
+
+### Switch с типами
+
+```go
+var i interface{} = "hello"
+
+switch v := i.(type) {
+case int:
+    fmt.Printf("int: %v\n", v)
+case string:
+    fmt.Printf("string: %v\n", v)
+default:
+    fmt.Printf("unknown: %T\n", v)
 }
 ```
 
@@ -218,6 +351,23 @@ func main() {
 func example() (i int) {
     defer func() { i++ }() // Увеличивает i перед возвратом
     return 1 // Фактически вернёт 2
+}
+```
+
+### Defer в циклах
+
+```go
+for _, file := range files {
+    f, err := os.Open(file)
+    if err != nil {
+        continue
+    }
+    defer f.Close() // Опасность! Все файлы закроются только при выходе из функции
+    // Лучше использовать анонимную функцию:
+    func() {
+        defer f.Close()
+        // работа с файлом
+    }()
 }
 ```
 
