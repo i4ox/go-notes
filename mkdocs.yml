@@ -1,8 +1,7 @@
-site_name: Go Notes
+site_name: Записки Go разработчика
 site_description: Заметки Go разработчика
 site_author: i4ox
 site_url: https://i4ox.github.io/go-notes
-
 theme:
   name: material
   language: ru
@@ -17,18 +16,8 @@ theme:
     - content.code.copy
   palette:
     - scheme: default
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-      primary: teal
+      primary: blue
       accent: purple
-    - scheme: slate
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
-      primary: teal
-      accent: lime
-
 markdown_extensions:
   - admonition
   - pymdownx.highlight:
@@ -46,48 +35,39 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
-
 nav:
   - Go:
-    - Основы языка:
-      - go/basics/packages.md
-      - go/basics/variables.md
-      - go/basics/control-flow.md
-      - go/basics/functions.md
-      - go/basics/methods.md
-    - Продвинутые темы:
-      - go/advanced/strings.md
-      - go/advanced/enum.md
-      - go/advanced/arrays-slices.md
-      - go/advanced/maps.md
-      - go/advanced/interfaces.md
-      - go/advanced/generics.md
-      - go/advanced/errors.md
-      - go/advanced/concurrency.md
-      - go/advanced/context.md
-    - Go изнутри:
-      - go/sdk/runtime.md
-      - go/sdk/directives.md
-      - go/sdk/garbage-collector.md
-  # - SQL(PostgreSQL):
-  #   - sql/index.md
-  #   - Основы SQL:
-  #     - sql/basics/select.md
-  #     - sql/basics/joins.md
-  #     - sql/basics/indexes.md
-  #   - Продвинутые темы:
-  #     - sql/advanced/transactions.md
-  #     - sql/advanced/optimization.md
-  # - DevOps:
-  #   - devops/index.md
-  #   - Основы:
-  #     - devops/basics/git.md
-  #     - devops/basics/docker.md
-  #     - devops/basics/ci-cd.md
-  #   - Мониторинг:
-  #     - devops/monitoring/prometheus.md
-  #     - devops/monitoring/grafana.md
-
+      - Основы языка:
+          - go/basics/packages.md
+          - go/basics/variables.md
+          - go/basics/control-flow.md
+          - go/basics/functions.md
+          - go/basics/methods.md
+      - Продвинутые темы:
+          - go/advanced/strings.md
+          - go/advanced/enum.md
+          - go/advanced/arrays-slices.md
+          - go/advanced/maps.md
+          - go/advanced/interfaces.md
+          - go/advanced/generics.md
+          - go/advanced/errors.md
+          - go/advanced/concurrency.md
+          - go/advanced/context.md
+      - Go изнутри:
+          - go/sdk/runtime.md
+          - go/sdk/directives.md
+          - go/sdk/garbage-collector.md
+  - Контейнеризация:
+      - Docker:
+          - docker/installation.md
+          - docker/architecture.md
+          - docker/ufs.md
+          - docker/containers.md
+          - docker/dockerfile.md
+          - docker/registry.md
+          - docker/commands.md
+      - Kubernetes:
+          - k8s/index.md
 extra:
   social:
     - icon: fontawesome/brands/github-alt
