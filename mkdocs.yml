@@ -58,14 +58,17 @@ nav:
           - go/sdk/directives.md
           - go/sdk/garbage-collector.md
   - Контейнеризация:
-      - Docker:
+      - Теория по Docker:
           - docker/installation.md
           - docker/architecture.md
           - docker/ufs.md
           - docker/containers.md
           - docker/dockerfile.md
+          - docker/volumes.md
           - docker/registry.md
           - docker/commands.md
+      - Практика Docker:
+          - docker/index.md
       - Kubernetes:
           - k8s/index.md
 extra:
